@@ -1,0 +1,8 @@
+<resources>
+
+	<string name="app_name">Muzei BGG</string>
+	<string name="source_name">BGG</string>
+	<string name="source_description">Images from BoardGameGeek.com</string>
+	<string name="byline_suffix_hotness_boardgame">on the Board Game Hotness</string>
+
+</resources>
