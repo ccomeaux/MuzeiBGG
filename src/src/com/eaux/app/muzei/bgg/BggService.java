@@ -74,7 +74,7 @@ public interface BggService {
 			int extensionDot = thumbnailUrl.lastIndexOf('.');
 			if (extensionDot != -1) {
 				if (thumbnailUrl.substring(0, extensionDot).endsWith("_t")) {
-					url = thumbnailUrl.substring(0, extensionDot - 2) + "_md" + thumbnailUrl.substring(extensionDot);
+					url = thumbnailUrl.substring(0, extensionDot - 2) + thumbnailUrl.substring(extensionDot);
 				}
 			}
 			return Uri.parse(url);
