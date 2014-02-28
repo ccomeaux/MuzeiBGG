@@ -2,4 +2,7 @@
 <lint>
     <issue id="ExportedService" severity="ignore" />
     <issue id="MissingApplicationIcon" severity="ignore" />
+    <issue id="NewApi">
+        <ignore path="res/values/styles.xml" />
+    </issue>
 </lint>

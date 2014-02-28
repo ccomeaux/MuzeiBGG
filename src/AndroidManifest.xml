@@ -28,7 +28,16 @@
 			<meta-data
 				android:name="color"
 				android:value="#e0e0ef" />
+			<meta-data
+				android:name="settingsActivity"
+				android:value=".SettingsActivity" />
 		</service>
+
+		<activity
+			android:name=".SettingsActivity"
+			android:exported="true"
+			android:label="@string/settings_title"
+			android:theme="@style/Theme.MuzeiBGG" />
 	</application>
 
 </manifest>

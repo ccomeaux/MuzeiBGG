@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
+
+	<header
+		android:fragment="com.eaux.app.muzei.bgg.SettingsActivity$PrefFragment"
+		android:icon="@drawable/ic_action_about"
+		android:title="@string/settings_about" >
+		<extra
+			android:name="fragment"
+			android:value="com.eaux.app.muzei.bgg.settings.ABOUT" />
+	</header>
+
+</preference-headers>
