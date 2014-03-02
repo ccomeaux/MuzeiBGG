@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:muzei="http://schemas.android.com/apk/res/com.eaux.app.muzei.bgg" >
+
+	<com.eaux.app.muzei.bgg.ViewUriPreference
+		android:summary="by Chris Comeaux"
+		android:title="@string/app_name"
+		muzei:uri="https://github.com/ccomeaux/MuzeiBGG" />
 
 	<com.eaux.app.muzei.bgg.VersionPreference android:title="@string/settings_version" />
+
+	<PreferenceCategory android:title="@string/settings_licenses" >
+		<com.eaux.app.muzei.bgg.ViewUriPreference
+			android:summary="by Roman Nurik"
+			android:title="Muzei"
+			muzei:uri="http://www.muzei.co/" />
+		<com.eaux.app.muzei.bgg.ViewUriPreference
+			android:title="BoardGameGeek"
+			muzei:uri="http://www.boardgamegeek.com/" />
+		<com.eaux.app.muzei.bgg.ViewUriPreference
+			android:summary="by Square"
+			android:title="Retrofit"
+			muzei:uri="http://square.github.io/retrofit/" />
+		<com.eaux.app.muzei.bgg.ViewUriPreference
+			android:summary="by Sebastian Engel"
+			android:title="retrofit-simplexmlconverter"
+			muzei:uri="https://github.com/mobile-professionals/retrofit-simplexmlconverter" />
+		<com.eaux.app.muzei.bgg.ViewUriPreference
+			android:summary="by Simple"
+			android:title="Simple XML Serialization"
+			muzei:uri="http://simple.sourceforge.net/" />
+	</PreferenceCategory>
 
 </PreferenceScreen>
