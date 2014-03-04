@@ -10,6 +10,7 @@ import org.simpleframework.xml.Root;
 import retrofit.http.GET;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 
 public interface BggService {
 	@GET("/xmlapi2/hot?type=boardgame")
@@ -64,6 +65,10 @@ public interface BggService {
 		@Attribute(name = "value")
 		@Path("yearpublished")
 		int yearPublished;
+		
+		public boolean isValid(){
+			return !TextUtils.equals("http://cf.geekdo-images.com/images/pic0_t.jpg", thumbnailUrl);
+		}
 
 		public Intent getIntent() {
 			return new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.boardgamegeek.com/boardgame/" + id));

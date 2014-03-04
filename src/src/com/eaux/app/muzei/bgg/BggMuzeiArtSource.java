@@ -53,17 +53,16 @@ public class BggMuzeiArtSource extends RemoteMuzeiArtSource {
 		Random random = new Random();
 		HotGame hg;
 		String token;
-		while (true) {
-			hg = response.hotGames.get(random.nextInt(response.hotGames.size()));
+		while (response.hotGames.size() > 0) {
+			hg = response.hotGames.remove(random.nextInt(response.hotGames.size()));
 			token = Integer.toString(hg.id);
-			if (response.hotGames.size() <= 1 || !TextUtils.equals(token, currentToken)) {
+			if (hg.isValid() && !TextUtils.equals(token, currentToken)) {
+				publishArtwork(new Artwork.Builder().title(hg.name)
+					.byline("#" + hg.rank + " " + getString(R.string.byline_suffix_hotness_boardgame))
+					.imageUri(hg.getUri()).token(token).viewIntent(hg.getIntent()).build());
 				break;
 			}
 		}
-
-		publishArtwork(new Artwork.Builder().title(hg.name)
-			.byline("#" + hg.rank + " " + getString(R.string.byline_suffix_hotness_boardgame)).imageUri(hg.getUri())
-			.token(token).viewIntent(hg.getIntent()).build());
 
 		scheduleUpdate(System.currentTimeMillis() + ROTATE_TIME_MILLIS);
 	}
