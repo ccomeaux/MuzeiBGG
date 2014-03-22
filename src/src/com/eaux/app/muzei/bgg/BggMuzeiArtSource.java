@@ -5,6 +5,10 @@ import java.util.Random;
 import org.simpleframework.xml.core.Persister;
 
 import retrofit.RestAdapter;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -19,6 +23,8 @@ public class BggMuzeiArtSource extends RemoteMuzeiArtSource {
 	private static final String SOURCE_NAME = "BggMuzeiArtSource";
 
 	private static final int ROTATE_TIME_MILLIS = 3 * 60 * 60 * 1000; // rotate every 3 hours
+	private static final int INITIAL_RETRY_TIME_MILLIS = 10 * 1000; // start retry every 10 seconds
+	private static final String PREF_NO_WIFI_RETRY_ATTEMPT = "no_wifi_retry_attempt";
 
 	public BggMuzeiArtSource() {
 		super(SOURCE_NAME);
@@ -31,7 +37,19 @@ public class BggMuzeiArtSource extends RemoteMuzeiArtSource {
 	}
 
 	@Override
-	protected void onTryUpdate(int arg0) throws RetryException {
+	protected void onTryUpdate(int reason) throws RetryException {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		if (reason == UPDATE_REASON_SCHEDULED || reason == UPDATE_REASON_OTHER) {
+			if (prefs.getBoolean(getString(R.string.settings_key_wifi_only), false) && !isWifiConnected()) {
+				Log.w(TAG, "Not connected to Wi-Fi.");
+				int retryAttempt = prefs.getInt(PREF_NO_WIFI_RETRY_ATTEMPT, 0);
+				scheduleUpdate(System.currentTimeMillis() + (INITIAL_RETRY_TIME_MILLIS << retryAttempt));
+				prefs.edit().putInt(PREF_NO_WIFI_RETRY_ATTEMPT, retryAttempt + 1).apply();
+				return;
+			}
+		}
+		prefs.edit().remove(PREF_NO_WIFI_RETRY_ATTEMPT).apply();
+
 		String currentToken = (getCurrentArtwork() != null) ? getCurrentArtwork().getToken() : null;
 
 		RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("http://boardgamegeek.com/")
@@ -40,14 +58,9 @@ public class BggMuzeiArtSource extends RemoteMuzeiArtSource {
 		BggService service = restAdapter.create(BggService.class);
 		HotGamesResponse response = service.getHotGames();
 
-		if (response == null || response.hotGames == null) {
+		if (response == null || response.hotGames == null || response.hotGames.size() == 0) {
+			Log.w(TAG, "Invalid response");
 			throw new RetryException();
-		}
-
-		if (response.hotGames.size() == 0) {
-			Log.w(TAG, "No games returned from API.");
-			scheduleUpdate(System.currentTimeMillis() + ROTATE_TIME_MILLIS);
-			return;
 		}
 
 		Random random = new Random();
@@ -65,5 +78,11 @@ public class BggMuzeiArtSource extends RemoteMuzeiArtSource {
 		}
 
 		scheduleUpdate(System.currentTimeMillis() + ROTATE_TIME_MILLIS);
+	}
+
+	private boolean isWifiConnected() {
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+		NetworkInfo ni = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+		return ni != null && ni.isConnected();
 	}
 }

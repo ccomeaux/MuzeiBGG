@@ -9,11 +9,13 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 
 public class SettingsActivity extends PreferenceActivity {
+	private final static String ACTION_NETWORK = "com.eaux.app.muzei.bgg.settings.NETWORK";
 	private final static String ACTION_ABOUT = "com.eaux.app.muzei.bgg.settings.ABOUT";
 	private static final HashMap<String, Integer> mFragmentMap = buildFragmentMap();
 
 	private static HashMap<String, Integer> buildFragmentMap() {
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put(ACTION_NETWORK, R.xml.preference_network);
 		map.put(ACTION_ABOUT, R.xml.preference_about);
 		return map;
 	}
@@ -33,7 +35,7 @@ public class SettingsActivity extends PreferenceActivity {
 		loadHeadersFromResource(R.xml.preference_headers, target);
 	}
 
-	public static class PrefFragment extends PreferenceFragment {
+	public static class SettingsFragment extends PreferenceFragment {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -49,6 +51,6 @@ public class SettingsActivity extends PreferenceActivity {
 
 	@Override
 	protected boolean isValidFragment(String fragmentName) {
-		return "com.eaux.app.muzei.bgg.SettingsActivity$PrefFragment".equals(fragmentName);
+		return "com.eaux.app.muzei.bgg.SettingsActivity$SettingsFragment".equals(fragmentName);
 	}
 }

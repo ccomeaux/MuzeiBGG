@@ -2,7 +2,15 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
 
 	<header
-		android:fragment="com.eaux.app.muzei.bgg.SettingsActivity$PrefFragment"
+		android:fragment="com.eaux.app.muzei.bgg.SettingsActivity$SettingsFragment"
+		android:icon="@drawable/ic_action_network_cell"
+		android:title="@string/settings_network" >
+		<extra
+			android:name="fragment"
+			android:value="com.eaux.app.muzei.bgg.settings.NETWORK" />
+	</header>
+	<header
+		android:fragment="com.eaux.app.muzei.bgg.SettingsActivity$SettingsFragment"
 		android:icon="@drawable/ic_action_about"
 		android:title="@string/settings_about" >
 		<extra

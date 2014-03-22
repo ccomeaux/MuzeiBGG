@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:muzei="http://schemas.android.com/apk/res/com.eaux.app.muzei.bgg" >
+
+	<CheckBoxPreference
+		android:defaultValue="false"
+		android:key="@string/settings_key_wifi_only"
+		android:summary="@string/settings_wifi_descr"
+		android:title="@string/settings_wifi" />
+
+</PreferenceScreen>
