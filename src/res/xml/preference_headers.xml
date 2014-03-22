@@ -3,11 +3,11 @@
 
 	<header
 		android:fragment="com.eaux.app.muzei.bgg.SettingsActivity$SettingsFragment"
-		android:icon="@drawable/ic_action_network_cell"
-		android:title="@string/settings_network" >
+		android:icon="@drawable/ic_action_refresh"
+		android:title="@string/settings_updates" >
 		<extra
 			android:name="fragment"
-			android:value="com.eaux.app.muzei.bgg.settings.NETWORK" />
+			android:value="com.eaux.app.muzei.bgg.settings.UPDATES" />
 	</header>
 	<header
 		android:fragment="com.eaux.app.muzei.bgg.SettingsActivity$SettingsFragment"

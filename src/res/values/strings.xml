@@ -6,7 +6,7 @@
 	<string name="byline_suffix_hotness_boardgame">on the Board Game Hotness</string>
 	<!-- Settings -->
 	<string name="settings_title">Settings</string>
-	<string name="settings_network">Network</string>
+	<string name="settings_updates">Updates</string>
 	<string name="settings_update_frequency">Update frequency</string>
 	<string name="settings_update_freq_default">180</string>
 	<string name="settings_wifi">Update via Wi-Fi only</string>
