@@ -2,6 +2,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:muzei="http://schemas.android.com/apk/res/com.eaux.app.muzei.bgg" >
 
+	<ListPreference
+		android:defaultValue="@string/settings_update_freq_default"
+		android:entries="@array/settings_update_freq_entries"
+		android:entryValues="@array/settings_update_freq_entry_values"
+		android:key="@string/settings_key_update_freq"
+		android:title="@string/settings_update_frequency" />
+
 	<CheckBoxPreference
 		android:defaultValue="false"
 		android:key="@string/settings_key_wifi_only"

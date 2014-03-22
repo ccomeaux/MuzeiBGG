@@ -22,7 +22,7 @@ public class BggMuzeiArtSource extends RemoteMuzeiArtSource {
 	private static final String TAG = "MuzeiBgg";
 	private static final String SOURCE_NAME = "BggMuzeiArtSource";
 
-	private static final int ROTATE_TIME_MILLIS = 3 * 60 * 60 * 1000; // rotate every 3 hours
+	private static final int DEFAULT_UPDATE_FREQUENCY = 3 * 60 * 60 * 1000; // update every 3 hours
 	private static final int INITIAL_RETRY_TIME_MILLIS = 10 * 1000; // start retry every 10 seconds
 	private static final String PREF_NO_WIFI_RETRY_ATTEMPT = "no_wifi_retry_attempt";
 
@@ -77,12 +77,26 @@ public class BggMuzeiArtSource extends RemoteMuzeiArtSource {
 			}
 		}
 
-		scheduleUpdate(System.currentTimeMillis() + ROTATE_TIME_MILLIS);
+		long updateFreq = getUpdateFrequency(prefs);
+		if (updateFreq > 0) {
+			scheduleUpdate(System.currentTimeMillis() + updateFreq);
+		}
 	}
 
 	private boolean isWifiConnected() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 		return ni != null && ni.isConnected();
+	}
+
+	private long getUpdateFrequency(SharedPreferences prefs) {
+		String updateFreqString = prefs.getString(getString(R.string.settings_key_update_freq),
+			getString(R.string.settings_update_freq_default));
+		long updateFreq = DEFAULT_UPDATE_FREQUENCY;
+		try {
+			updateFreq = Integer.parseInt(updateFreqString) * 60 * 1000;
+		} catch (NumberFormatException e) {
+		}
+		return updateFreq;
 	}
 }

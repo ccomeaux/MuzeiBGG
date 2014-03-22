@@ -5,6 +5,9 @@ import java.util.List;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 
@@ -45,6 +48,19 @@ public class SettingsActivity extends PreferenceActivity {
 				if (fragmentId != null) {
 					addPreferencesFromResource(fragmentId);
 				}
+			}
+
+			final ListPreference listPreference = (ListPreference) findPreference(getString(R.string.settings_key_update_freq));
+			if (listPreference != null) {
+				listPreference.setSummary(listPreference.getEntry());
+				listPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+					@Override
+					public boolean onPreferenceChange(Preference preference, Object newValue) {
+						listPreference.setValue(newValue.toString());
+						preference.setSummary(listPreference.getEntry());
+						return true;
+					}
+				});
 			}
 		}
 	}
