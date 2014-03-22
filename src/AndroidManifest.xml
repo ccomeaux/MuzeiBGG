@@ -28,7 +28,7 @@
 
 			<meta-data
 				android:name="color"
-				android:value="#e0e0ef" />
+				android:value="#2A2C70" />
 			<meta-data
 				android:name="settingsActivity"
 				android:value=".SettingsActivity" />
