@@ -12,8 +12,9 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 
 public class SettingsActivity extends PreferenceActivity {
-	private final static String ACTION_UPDATES = "com.eaux.app.muzei.bgg.settings.UPDATES";
-	private final static String ACTION_ABOUT = "com.eaux.app.muzei.bgg.settings.ABOUT";
+	public final static String PREFIX = "com.eaux.app.muzei.bgg.settings.";
+	private final static String ACTION_UPDATES = PREFIX + "UPDATES";
+	private final static String ACTION_ABOUT = PREFIX + "ABOUT";
 	private static final HashMap<String, Integer> mFragmentMap = buildFragmentMap();
 
 	private static HashMap<String, Integer> buildFragmentMap() {

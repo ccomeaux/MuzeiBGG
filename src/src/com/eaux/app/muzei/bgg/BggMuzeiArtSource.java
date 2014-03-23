@@ -24,7 +24,7 @@ public class BggMuzeiArtSource extends RemoteMuzeiArtSource {
 
 	private static final int DEFAULT_UPDATE_FREQUENCY = 3 * 60 * 60 * 1000; // update every 3 hours
 	private static final int INITIAL_RETRY_TIME_MILLIS = 10 * 1000; // start retry every 10 seconds
-	private static final String PREF_NO_WIFI_RETRY_ATTEMPT = "no_wifi_retry_attempt";
+	private static final String PREF_NO_WIFI_RETRY_ATTEMPT = SettingsActivity.PREFIX + "no_wifi_retry_attempt";
 
 	public BggMuzeiArtSource() {
 		super(SOURCE_NAME);
@@ -39,12 +39,11 @@ public class BggMuzeiArtSource extends RemoteMuzeiArtSource {
 	@Override
 	protected void onTryUpdate(int reason) throws RetryException {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
 		if (reason == UPDATE_REASON_SCHEDULED || reason == UPDATE_REASON_OTHER) {
 			if (prefs.getBoolean(getString(R.string.settings_key_wifi_only), false) && !isWifiConnected()) {
 				Log.w(TAG, "Not connected to Wi-Fi.");
-				int retryAttempt = prefs.getInt(PREF_NO_WIFI_RETRY_ATTEMPT, 0);
-				scheduleUpdate(System.currentTimeMillis() + (INITIAL_RETRY_TIME_MILLIS << retryAttempt));
-				prefs.edit().putInt(PREF_NO_WIFI_RETRY_ATTEMPT, retryAttempt + 1).apply();
+				scheduleUpdate(System.currentTimeMillis() + getRetryTime(prefs));
 				return;
 			}
 		}
@@ -87,6 +86,14 @@ public class BggMuzeiArtSource extends RemoteMuzeiArtSource {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 		return ni != null && ni.isConnected();
+	}
+
+	private long getRetryTime(SharedPreferences prefs) {
+		int retryAttempt = prefs.getInt(PREF_NO_WIFI_RETRY_ATTEMPT, 0);
+		Log.w(TAG, "Retry #" + retryAttempt);
+		long retryTime = Math.min(INITIAL_RETRY_TIME_MILLIS << retryAttempt, getUpdateFrequency(prefs));
+		prefs.edit().putInt(PREF_NO_WIFI_RETRY_ATTEMPT, retryAttempt + 1).apply();
+		return retryTime;
 	}
 
 	private long getUpdateFrequency(SharedPreferences prefs) {
