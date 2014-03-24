@@ -2,6 +2,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:muzei="http://schemas.android.com/apk/res/com.eaux.app.muzei.bgg" >
 
+	<MultiSelectListPreference
+		android:defaultValue="@array/settings_hotness_type_default"
+		android:entries="@array/settings_hotness_type_entries"
+		android:entryValues="@array/settings_hotness_type_entry_values"
+		android:key="@string/settings_key_hotness_type"
+		android:title="@string/settings_hotness_type" />
+
 	<ListPreference
 		android:defaultValue="@string/settings_update_freq_default"
 		android:entries="@array/settings_update_freq_entries"

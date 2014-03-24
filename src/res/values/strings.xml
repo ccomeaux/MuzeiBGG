@@ -3,10 +3,11 @@
 	<string name="app_name">BoardGameGeek for Muzei</string>
 	<string name="source_name">BoardGameGeek</string>
 	<string name="source_description">Images from BoardGameGeek.com</string>
-	<string name="byline_suffix_hotness_boardgame">on the Board Game Hotness</string>
+	<string name="byline_suffix_hotness">on the %s Hotness</string>
 	<!-- Settings -->
 	<string name="settings_title">Settings</string>
 	<string name="settings_updates">Updates</string>
+	<string name="settings_hotness_type">Hotness type</string>
 	<string name="settings_update_frequency">Update frequency</string>
 	<string name="settings_update_freq_default">180</string>
 	<string name="settings_wifi">Update via Wi-Fi only</string>
@@ -14,9 +15,33 @@
 	<string name="settings_about">About</string>
 	<string name="settings_version">Version</string>
 	<string name="settings_licenses">Thanks to</string>
+	<string name="settings_key_hotness_type">HOTNESS_TYPE</string>
 	<string name="settings_key_update_freq">UPDATE_FREQ</string>
 	<string name="settings_key_wifi_only">WIFI_ONLY</string>
 
+	<string-array name="settings_hotness_type_entries">
+		<item>Board Games</item>
+		<item>Board Game People</item>
+		<item>Board Game Companies</item>
+		<item>RPGs</item>
+		<item>RPG People</item>
+		<item>RPG Companies</item>
+		<item>Video Games</item>
+		<item>Video Game Companies</item>
+	</string-array>
+	<string-array name="settings_hotness_type_entry_values">
+		<item>boardgame</item>
+		<item>boardgameperson</item>
+		<item>boardgamecompany</item>
+		<item>rpg</item>
+		<item>rpgperson</item>
+		<item>rpgcompany</item>
+		<item>videogame</item>
+		<item>videogamecompany</item>
+	</string-array>
+	<string-array name="settings_hotness_type_default">
+		<item>boardgame</item>
+	</string-array>
 	<string-array name="settings_update_freq_entries">
 		<item>1 hour</item>
 		<item>3 hours</item>

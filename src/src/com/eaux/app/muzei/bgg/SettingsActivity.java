@@ -2,10 +2,12 @@ package com.eaux.app.muzei.bgg;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.preference.ListPreference;
+import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
@@ -63,6 +65,39 @@ public class SettingsActivity extends PreferenceActivity {
 					}
 				});
 			}
+
+			final MultiSelectListPreference msListPreference = (MultiSelectListPreference) findPreference(getString(R.string.settings_key_hotness_type));
+			if (msListPreference != null) {
+				msListPreference.setSummary(formatSummary(msListPreference));
+				msListPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+					@SuppressWarnings("unchecked")
+					@Override
+					public boolean onPreferenceChange(Preference preference, Object newValue) {
+						msListPreference.setValues((Set<String>) newValue);
+						preference.setSummary(formatSummary(msListPreference));
+						return true;
+					}
+				});
+			}
+		}
+
+		private String formatSummary(final MultiSelectListPreference msListPreference) {
+			CharSequence[] entryValues = msListPreference.getEntryValues();
+			CharSequence[] entries = msListPreference.getEntries();
+			Set<String> values = msListPreference.getValues();
+
+			StringBuilder sb = new StringBuilder();
+			String delimeter = "";
+			for (int i = 0; i < entryValues.length; i++) {
+				for (String value : values) {
+					if (value.equals(entryValues[i])) {
+						sb.append(delimeter).append(entries[i]);
+						delimeter = ", ";
+						break;
+					}
+				}
+			}
+			return sb.toString();
 		}
 	}
 

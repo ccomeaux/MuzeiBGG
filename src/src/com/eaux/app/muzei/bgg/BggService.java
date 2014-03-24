@@ -8,13 +8,14 @@ import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
 
 import retrofit.http.GET;
+import retrofit.http.Query;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
 public interface BggService {
-	@GET("/xmlapi2/hot?type=boardgame")
-	HotGamesResponse getHotGames();
+	@GET("/xmlapi2/hot")
+	HotnessResponse getHotness(@Query("type") String type);
 
 	/**
 	 * 
@@ -29,12 +30,11 @@ public interface BggService {
 	 * &lt;/items&gt;
 	 * </pre>
 	 */
-	static class HotGamesResponse {
+	static class HotnessResponse {
 		@Attribute(name = "termsofuse")
 		String termsOfUse;
 		@ElementList(name = "items", inline = true)
-		List<HotGame> hotGames;
-
+		List<HotItem> hotItems;
 	}
 
 	/**
@@ -51,7 +51,7 @@ public interface BggService {
 	 * </pre>
 	 */
 	@Root(name = "item")
-	static class HotGame {
+	static class HotItem {
 		@Attribute
 		int id;
 		@Attribute
@@ -65,13 +65,13 @@ public interface BggService {
 		@Attribute(name = "value")
 		@Path("yearpublished")
 		int yearPublished;
-		
-		public boolean isValid(){
+
+		public boolean isValid() {
 			return !TextUtils.equals("http://cf.geekdo-images.com/images/pic0_t.jpg", thumbnailUrl);
 		}
 
-		public Intent getIntent() {
-			return new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.boardgamegeek.com/boardgame/" + id));
+		public Intent getIntent(String type) {
+			return new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.boardgamegeek.com/" + type + "/" + id));
 		}
 
 		public Uri getUri() {
